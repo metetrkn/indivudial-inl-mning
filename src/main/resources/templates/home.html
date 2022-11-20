@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+<html lang="en" 
+xmlns:th="http://www.thymeleaf.org" 
 th:replace="~{fragments/layouttemplate :: layout (~{::body})}">
     <head>
     <meta charset="UTF-8"/>
     <title>replace</title>
 </head>
 <body>
+    <div sec:authorize="hasRole('USER')">Text visible to user.</div>
+	<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+	Authenticated username:
+	<div sec:authentication="name"></div>
+
 
     <div class="section">
         <!-- container -->

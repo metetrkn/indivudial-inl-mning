@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" 
-th:replace="~{fragments/layouttemplate :: layout (~{::body})}">
+th:replace="~{fragments/layouttemplate :: layout (~{::body})}"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+>
     <head>
     <meta charset="UTF-8"/>
     <title>replace</title>
@@ -13,11 +15,11 @@ th:replace="~{fragments/layouttemplate :: layout (~{::body})}">
             <div class="mx-auto">
                 <h2>Log in</h2>
             <form th:action="@{/login}" th:object="${loginForm}" method="post">
-                
+              <div class="text--center" th:if="${param.error}"> Invalid username and password. </div> <div class="text--center" th:if="${param.logout}"> You have been logged out. </div>                
                 <p th:if="${error}" class="error">UserName & Password Incorrect</p>
                         <div class="form-group">
                             <label for="username">Email address</label>
-                          <input class="form-control" required type="email" name="email">
+                          <input class="form-control" required type="email" name="username">
                         </div>
                         <div class="form-group">
                             <label for="password">Lösenord</label>
