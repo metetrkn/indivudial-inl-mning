@@ -4,22 +4,31 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import se.systementor.supershoppen1.shop.configuration.PasswordEncoderConfiguration;
 import se.systementor.supershoppen1.shop.model.Category;
 import se.systementor.supershoppen1.shop.model.Product;
+import se.systementor.supershoppen1.shop.model.UserAccount;
+import se.systementor.supershoppen1.shop.model.UserAccountRepository;
 import se.systementor.supershoppen1.shop.services.CategoryService;
 import se.systementor.supershoppen1.shop.services.ProductService;
+import se.systementor.supershoppen1.shop.services.ShopUserDetailsService;
 
 @Component
 public class SeedData implements CommandLineRunner {
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final ShopUserDetailsService userDetailsService;
+    private final PasswordEncoderConfiguration encoderConfig;
 
     @Autowired
-    public SeedData(ProductService productService, CategoryService categoryService) {
+    public SeedData(ProductService productService, CategoryService categoryService, ShopUserDetailsService userDetailsService, PasswordEncoderConfiguration encoderConfig) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.userDetailsService = userDetailsService;
+        this.encoderConfig = encoderConfig;
     }
 
     @Override
@@ -29,6 +38,7 @@ public class SeedData implements CommandLineRunner {
         // category();
         exampleCategories();
         exampleProducts();
+        exampleUsers();
     }
 
 
@@ -49,6 +59,13 @@ public class SeedData implements CommandLineRunner {
         addCategory(existing,"Meat/Poultry","Prepared meats");
         addCategory(existing,"Produce","Dried fruit and bean curd");
         addCategory(existing,"Seafood","Seaweed and fish");
+    }
+
+    private void exampleUsers(){
+        var existingUsers = userDetailsService.getAll();
+        addUser(existingUsers, "admin@user.se", "ROLE_ADMIN");
+        addUser(existingUsers, "user@user.se", "ROLE_USER");
+
     }
 
 
@@ -134,6 +151,16 @@ public class SeedData implements CommandLineRunner {
         addProduct(existingProducts, findCatId(existingCats,"Beverages") ,"Lakkalikööri",18,57,"Fantastic");
         addProduct(existingProducts, findCatId(existingCats,"Condiments") ,"Original Frankfurter grüne Soße",13,32,"Fantastic");    
     }
+
+    private void addUser(List<UserAccount> existingUsers, String email, String groups) {
+        for(UserAccount acc: existingUsers){
+            if(acc.getEmail().equals(email)) return;
+        }
+        UserAccount acc = new UserAccount(email, encoderConfig.passwordEncoder().encode("stefan123") , groups);
+        userDetailsService.save(acc);
+        
+    }
+
 
     private void addCategory(List<Category> existing, String name,String description){
         for (Category cat : existing) {

@@ -11,24 +11,32 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import se.systementor.supershoppen1.shop.services.ShopUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig  {
+
+    @Autowired
+    private ShopUserDetailsService userDetailsService;
+
 
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth,PasswordEncoder passwordEncoder) 
       throws Exception {
         auth
-          .inMemoryAuthentication()
-          .passwordEncoder(passwordEncoder)
-          .withUser("user@user.se")
-          .password(passwordEncoder.encode("stefan"))
-          .roles("USER")
-          .and()
-          .withUser("admin@user.se")
-          .password(passwordEncoder.encode("stefan"))
-          .roles("ADMIN");
+        .userDetailsService(userDetailsService)
+        .passwordEncoder(passwordEncoder);
+        //   .inMemoryAuthentication()
+        //   .passwordEncoder(passwordEncoder)
+        //   .withUser("user@user.se")
+        //   .password(passwordEncoder.encode("stefan"))
+        //   .roles("USER")
+        //   .and()
+        //   .withUser("admin@user.se")
+        //   .password(passwordEncoder.encode("stefan"))
+        //   .roles("ADMIN");
     }
     
 
@@ -37,7 +45,7 @@ public class WebSecurityConfig  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-					.antMatchers("/", "/*", "/css/**", "/images/**", "/lib/**", "/scripts/**").permitAll()
+					.antMatchers("/", "/*", "/css/**", "/images/**", "/lib/**", "/scripts/**", "/static/**").permitAll()
 					.antMatchers("/admin/**").hasAnyRole("ADMIN")
 					.antMatchers("/user/**").hasAnyRole("USER")
 					.anyRequest().authenticated()
