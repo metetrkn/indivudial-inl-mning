@@ -2188,3 +2188,15 @@ textarea.input {
     margin-top: 10px;
   }
 }
+
+
+
+.mx-auto {
+  position: relative;
+  max-width: 520px;
+  margin: 30px auto;
+}
+
+.error {
+  color:#ef233c;
+}

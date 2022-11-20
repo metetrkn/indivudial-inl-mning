@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{fragments/layouttemplate :: layout (~{::body})}">
+    <head>
+    <meta charset="UTF-8"/>
+    <title>replace</title>
+</head>
+<body>
+
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <div class="mx-auto">
+                <h2>Log in</h2>
+            <form th:action="@{/login}" th:object="${loginForm}" method="post">
+                
+                <p th:if="${error}" class="error">UserName & Password Incorrect</p>
+                        <div class="form-group">
+                            <label for="username">Email address</label>
+                          <input class="form-control" required type="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Lösenord</label>
+                          <input class="form-control" required type="password" name="password">
+                        </div>
+                          <button type="submit" class="btn btn-primary">
+                            Login
+                            </button>
+                      </form>
+                    </div>
+        </div>
+        <!-- /container -->
+    </div>
+
+
+
+</body>
+</html>

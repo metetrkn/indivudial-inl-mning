@@ -137,7 +137,7 @@ public class SeedData implements CommandLineRunner {
 
     private void addCategory(List<Category> existing, String name,String description){
         for (Category cat : existing) {
-            if (cat.getName() == name) return;
+            if (cat.getName().equals(name)) return;
         }
         Category cat1 = new Category();
         cat1.setName(name);
@@ -146,7 +146,7 @@ public class SeedData implements CommandLineRunner {
     }
     private void addProduct(List<Product> existing, int catId, String name,int pris,int stocklevel,String description){
         for (Product product : existing) {
-            if (product.getName() == name) return;
+            if (product.getName().equals(name)) return;
         }
         Product product1 = new Product();
         product1.setName(name);

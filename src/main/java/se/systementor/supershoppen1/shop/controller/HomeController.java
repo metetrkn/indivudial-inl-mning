@@ -21,7 +21,7 @@ public class HomeController {
     @GetMapping(path="/")
     String empty(Model model)
     {
-        return "test";
+        return "home";
     }
 
     @GetMapping(path="/test2")
