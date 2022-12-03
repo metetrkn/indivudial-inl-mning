@@ -173,7 +173,7 @@ public class SeedData implements CommandLineRunner {
     }
     private void addProduct(List<Product> existing, int catId, String name,int pris,int stocklevel,String description){
         for (Product product : existing) {
-            if (product.getName().equals(name)) return;
+            if (product.getName() == name) return;
         }
         Product product1 = new Product();
         product1.setName(name);
