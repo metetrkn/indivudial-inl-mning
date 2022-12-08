@@ -52,10 +52,12 @@ public class Product {
     }
 
     public void setStockLevel(int i) {
+        //Added stock level
         stockLevel = i;
     }
 
     public int getStockLevel() {
+        //Added stock level
         return stockLevel;
     }
 
