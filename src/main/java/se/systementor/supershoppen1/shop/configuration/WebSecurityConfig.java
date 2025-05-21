@@ -15,19 +15,18 @@ import se.systementor.supershoppen1.shop.services.ShopUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  {
+public class WebSecurityConfig {
 
     @Autowired
     private ShopUserDetailsService userDetailsService;
 
 
-
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth,PasswordEncoder passwordEncoder) 
-      throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder)
+            throws Exception {
         auth
-        .userDetailsService(userDetailsService)
-        .passwordEncoder(passwordEncoder);
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
         //   .inMemoryAuthentication()
         //   .passwordEncoder(passwordEncoder)
         //   .withUser("user@user.se")
@@ -38,38 +37,39 @@ public class WebSecurityConfig  {
         //   .password(passwordEncoder.encode("stefan"))
         //   .roles("ADMIN");
     }
-    
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-					.antMatchers("/", "/*", "/css/**", "/images/**", "/lib/**", "/scripts/**", "/static/**").permitAll()
-					.antMatchers("/admin/**").hasAnyRole("ADMIN")
-					.antMatchers("/user/**").hasAnyRole("USER")
-					.anyRequest().authenticated()
+                .antMatchers("/", "/*", "/css/**", "/images/**", "/lib/**", "/scripts/**", "/static/**").permitAll()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER")
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                        .loginPage("/login")
-                        .permitAll()
-                        .defaultSuccessUrl("/")
-                        .and()
+
+                .oauth2Login()
+                .and()
+
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/")
+                .and()
                 .logout()
-					.permitAll()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login");
+                .permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login");
 
 
-        return http.build(); 
+        return http.build();
     }
 
 
     public WebSecurityConfig() {
         super();
     }
-
-
 
 
 }
