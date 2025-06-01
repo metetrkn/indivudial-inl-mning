@@ -17,6 +17,7 @@
 		<java.version>21</java.version>
         <hibernate.version>5.6.15.Final</hibernate.version>
         <mysql.connector.version>8.0.33</mysql.connector.version>
+        <postgresql.version>42.7.2</postgresql.version>
     </properties>
 	<dependencies>
 
@@ -75,6 +76,13 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
+        </dependency>
+
+        <!-- PostgreSQL -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
 
         <!-- Git login Ouath -->
