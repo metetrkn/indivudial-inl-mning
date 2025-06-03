@@ -1,37 +1,16 @@
 version: 0.2
-
 phases:
   install:
     runtime-versions:
       java: corretto21
-    commands:
-      - echo "Installing dependencies..."
-      - mvn --version
-
-  pre_build:
-    commands:
-      - echo "Pre-build cleanup..."
-      - rm -f application.jar
-
   build:
     commands:
-      - echo "Building application..."
-      - mvn clean package -DskipTests
-      - echo "Build output:"
-      - ls -lh target/
-
+      - echo Build completed on `date`
+      - mvn package
   post_build:
     commands:
-      - echo "Preparing artifacts..."
-      - |
-          JAR_FILE=$(ls target/*.jar | head -1)
-          cp "$JAR_FILE" application.jar
-      - echo "Final artifact:"
-      - ls -l application.jar
-      - echo "Artifact size: $(du -h application.jar | cut -f1)"
-
+      - echo Build completed on `data`
 artifacts:
   files:
-    - application.jar
+    - target/*.jar
   discard-paths: yes
-  base-directory: ./ 
