@@ -23,8 +23,9 @@ phases:
   post_build:
     commands:
       - echo "Preparing artifacts..."
-      - JAR_FILE=$(ls target/*.jar | head -1)
-      - cp "$JAR_FILE" application.jar
+      - |
+          JAR_FILE=$(ls target/*.jar | head -1)
+          cp "$JAR_FILE" application.jar
       - echo "Final artifact:"
       - ls -l application.jar
       - echo "Artifact size: $(du -h application.jar | cut -f1)"
