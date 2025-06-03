@@ -33,4 +33,4 @@ artifacts:
   files:
     - application.jar
   discard-paths: yes
-  base-directory: ./
+  base-directory: ./ 
