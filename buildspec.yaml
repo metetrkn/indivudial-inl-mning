@@ -6,7 +6,7 @@ phases:
       java: corretto21
   build:
     commands:
-      - mvn clean package -DskipTests
+      - mvn clean package
       - echo "Build output:"
       - ls -lh target
   post_build:
