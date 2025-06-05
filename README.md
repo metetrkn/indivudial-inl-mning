@@ -9,16 +9,6 @@ JavaShop is a modern e-commerce platform built with Spring Boot, offering a robu
   - OAuth2 integration with GitHub
   - Role-based access control
 
-- **Product Management**
-  - Product catalog with categories
-  - Detailed product views
-  - Search functionality
-
-- **Shopping Experience**
-  - Shopping cart functionality
-  - Secure checkout process
-  - Order tracking
-
 - **Security**
   - Spring Security integration
   - Encrypted data storage
@@ -32,7 +22,7 @@ JavaShop is a modern e-commerce platform built with Spring Boot, offering a robu
   - Spring Security
   - Spring Data JPA
   - Hibernate 5.6.15
-  - MySQL 8.0
+  - PostgreSQL 42.7.2
 
 - **Frontend**
   - Thymeleaf
@@ -44,7 +34,7 @@ JavaShop is a modern e-commerce platform built with Spring Boot, offering a robu
 
 - Java 21 or higher
 - Maven 3.6 or higher
-- MySQL 8.0 or higher
+- PostgreSQL
 - Git
 
 ## 🚀 Getting Started
@@ -56,7 +46,7 @@ JavaShop is a modern e-commerce platform built with Spring Boot, offering a robu
    ```
 
 2. **Configure the database**
-   - Create a MySQL database
+   - Create a PostgreSQL database
    - Update `application-dev.properties` with your database credentials
 
 3. **Build the project**
@@ -70,7 +60,7 @@ JavaShop is a modern e-commerce platform built with Spring Boot, offering a robu
    ```
 
 5. **Access the application**
-   - Open your browser and navigate to `http://localhost:8080`
+   - Open your browser and navigate to `http://localhost:5000`
 
 ## 🔧 Configuration
 
@@ -78,6 +68,43 @@ The application uses different profiles for development and production environme
 
 - **Development**: `mvn spring-boot:run -Pdev`
 - **Production**: `mvn spring-boot:run -Pproduction`
+
+### Production Environment Variables
+
+The following environment variables need to be set for production deployment:
+
+```bash
+RDS_HOSTNAME=your-db-host
+RDS_PORT=your-db-port
+RDS_DB_NAME=your-db-name
+RDS_USERNAME=your-db-username
+RDS_PASSWORD=your-db-password
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRETS=your-github-client-secret
+```
+
+## 🚀 Deployment
+
+This project is deployed using AWS Elastic Beanstalk and AWS CodePipeline with GitHub webhook integration:
+
+### AWS Elastic Beanstalk
+- The application is deployed on AWS Elastic Beanstalk for scalable and managed hosting
+- Environment is configured for Java 21 and Spring Boot applications
+- Uses PostgreSQL RDS for database management
+- Configured for production-grade performance and security
+
+### CI/CD Pipeline
+- AWS CodePipeline is used for continuous integration and deployment
+- GitHub webhook integration for automatic deployments on push
+- Automated build and test process using AWS CodeBuild
+- Zero-downtime deployments with Elastic Beanstalk
+
+### Deployment Process
+1. Code is pushed to the main branch
+2. GitHub webhook triggers AWS CodePipeline
+3. CodeBuild compiles and tests the application
+4. Elastic Beanstalk deploys the new version
+5. Health checks ensure successful deployment
 
 ## 📁 Project Structure
 
@@ -116,13 +143,4 @@ src/
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👥 Authors
-
-- @aspcodenet
-- @metetrkn
-- @eliascaws
-- @Elijah71176
-- @Mim4033
-- @bit92
+This project is licensed under the [MIT License](LICENSE) - click to view the full license text.
